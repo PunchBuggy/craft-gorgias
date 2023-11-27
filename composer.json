@@ -1,0 +1,51 @@
+{
+    "name": "punchbuggy/craft-gorgias",
+    "description": "Integration for Craft with Gorgias",
+    "type": "craft-plugin",
+    "license": "proprietary",
+    "support": {
+        "email": "info@punchbuggy.com.au",
+        "issues": "https://github.com/punchbuggy/craft-gorgias/issues?state=open",
+        "source": "https://github.com/punchbuggy/craft-gorgias",
+        "docs": "https://github.com/punchbuggy/craft-gorgias",
+        "rss": "https://github.com/punchbuggy/craft-gorgias/releases.atom"
+    },
+    "require": {
+        "php": ">=8.0.2",
+        "craftcms/cms": "^4.4.0",
+        "guzzlehttp/guzzle": "^7.2.0"
+    },
+    "require-dev": {
+        "craftcms/ecs": "dev-main",
+        "craftcms/phpstan": "dev-main"
+    },
+    "autoload": {
+        "psr-4": {
+            "punchbuggy\\craftgorgias\\": "src/"
+        }
+    },
+    "version": "1.0.0",
+    "extra": {
+        "handle": "gorgias",
+        "name": "Gorgias",
+        "developer": "Punch Buggy Digital Agency",
+        "documentationUrl": "https://github.com/punchbuggy/craft-gorgias",
+        "class": "punchbuggy\\craftgorgias\\Gorgias"
+    },
+    "scripts": {
+        "check-cs": "ecs check --ansi",
+        "fix-cs": "ecs check --ansi --fix",
+        "phpstan": "phpstan --memory-limit=1G"
+    },
+    "config": {
+        "sort-packages": true,
+        "platform": {
+            "php": "8.0.2"
+        },
+        "allow-plugins": {
+            "yiisoft/yii2-composer": true,
+            "craftcms/plugin-installer": true
+        }
+    }
+}
+
