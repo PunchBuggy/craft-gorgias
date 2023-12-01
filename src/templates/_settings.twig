@@ -1,6 +1,91 @@
 {# @var plugin \punchbuggy\craftgorgias\Gorgias #}
 {# @var settings \punchbuggy\craftgorgias\models\Settings #}
+<div data-js="install-button" class="hidden">
+    <a data-js="install-app" class="btn submit disabled">Connect Craft to Gorgias</a>
+    <hr />
+</div>
 
 {% import '_includes/forms.twig' as forms %}
 
-{# ... #}
+{% set schemaId = settings['schemaId'] %}
+
+{% if not schemaId %}
+    {% set schemaId = settings.getSchemaId() %}
+{% endif %}
+
+{% set tokenId = settings['tokenId'] %}
+
+{% if not tokenId %}
+    {% set tokenId = settings.getTokenId() %}
+{% endif %}
+
+{{  forms.hidden({
+    id: 'schemaId',
+    name: 'schemaId',
+    value: schemaId,
+    })
+}}
+
+{{  forms.hidden({
+    id: 'tokenId',
+    name: 'tokenId',
+    value: tokenId,
+    })
+}}
+
+{{  forms.hidden({
+    id: 'gorgiasIntegrationId',
+    name: 'gorgiasIntegrationId',
+    value: settings['gorgiasIntegrationId'],
+    })
+}}
+
+{{  forms.autosuggestField({
+    label: 'Base API URL',
+    instructions: 'Base URL from your Gorgias Settings -> REST API.',
+    id: 'baseApiUrl',
+    name: 'baseApiUrl',
+    value: settings['baseApiUrl'],
+    suggestEnvVars: true
+    })
+}}
+
+{{ forms.autosuggestField({
+    label: 'Username',
+    instructions: 'Username from your Gorgias Settings -> REST API',
+    id: 'username',
+    name: 'username',
+    value: settings['username'],
+    suggestEnvVars: true
+})
+}}
+
+{{ forms.autosuggestField({
+    label: 'API Key',
+    instructions: 'Password (API Key) from your Gorgias Settings -> REST API',
+    id: 'apiKey',
+    name: 'apiKey',
+    value: settings['apiKey'],
+    suggestEnvVars: true
+})
+}}
+
+{% js %}
+    $(document).ready(function() {
+
+        if ($('#settings-gorgiasIntegrationId').val() === "") {
+
+            $('[data-js="install-button"]').removeClass('hidden');
+
+            if ($('#settings-baseApiUrl').val() !== "" && $('#settings-username').val() !== "" && $('#settings-apiKey').val() !== "") {
+                $('[data-js="install-app"]').removeClass('disabled');
+            }
+
+            $(document).on('click', '[data-js="install-app"]:not(.disabled)', function() {
+                window.location.href = '{{ siteUrl }}/actions/gorgias/gorgias-endpoints/create-integration';
+            });
+        }
+
+        
+    });
+{% endjs %}
