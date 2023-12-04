@@ -103,14 +103,28 @@ class GorgiasService extends Component
 	}
 
 
-	public function listWidgets($integrationId) : bool|int {
+	public function listWidgets($integrationId = null) : bool|array {
 
-		$response = $this->client->get($this->baseApiUrl . 'widgets?limit=30');
+        $integrationQuery = "";
+        $finalWidgets = [];
 
-        $gorgiasWidgets = json_decode($response->getBody()->getContents());
+        if ($integrationId) {
+            $integrationQuery = "&integration_id=".$integrationId;
+        }
 
-        var_dump($gorgiasWidgets->data);
-        exit();
+        try {
+
+		  $response = $this->client->get($this->baseApiUrl . 'widgets?limit=30' . $integrationQuery);
+
+            $gorgiasWidgets = json_decode($response->getBody()->getContents());
+
+            $finalWidgets = $gorgiasWidgets->data;
+        }
+        catch (ClientException $e) {
+            return false;
+        }
+
+        return $finalWidgets;
 	}
 
 	public function deleteIntegration($integrationId) : bool {
@@ -128,8 +142,14 @@ class GorgiasService extends Component
 	public function deleteWidgets($integrationId) : bool {
 		//get all widgets and get Ids of widgets that are attached to this integration
 
+        $widgets = $this->listWidgets($integrationId);
+
 		try {
-            $response = $this->client->delete($this->baseApiUrl . 'integrations/' . $integrationId . '/');
+            
+            foreach ($widgets as $widget) {
+                $response = $this->client->delete($this->baseApiUrl . 'widgets/' . $widget->id . '/');
+            }
+
         }
         catch (ClientException $e) {
             return false;

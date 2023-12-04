@@ -7,6 +7,7 @@ use craft\base\Model;
 use craft\base\Plugin;
 use punchbuggy\craftgorgias\models\Settings;
 use craft\helpers\Gql as GqlHelper;
+use craft\helpers\UrlHelper;
 use craft\services\Gql;
 use craft\services\Plugins;
 use craft\events\PluginEvent;
@@ -63,6 +64,14 @@ class Gorgias extends Plugin
         ]);
     }
 
+    public function afterSaveSettings() :void
+    {
+            parent::afterSaveSettings();
+            Craft::$app->response
+                ->redirect(UrlHelper::cpUrl('settings/plugins/gorgias'))
+                ->send();
+    }
+    
     private function attachEventHandlers(): void
     {
         Event::on(
@@ -108,16 +117,16 @@ class Gorgias extends Plugin
             function (PluginEvent $event) {
                 if ($event->plugin === $this) {
                     //Remove Schema and token,
-                    // Craft::$app->getGql()->deleteSchemaById($this->getSettings()->schemaId);
-                    // Craft::$app->getGql()->deleteTokenById($this->getSettings()->tokenId);
+                    Craft::$app->getGql()->deleteSchemaById($this->getSettings()->schemaId);
+                    Craft::$app->getGql()->deleteTokenById($this->getSettings()->tokenId);
 
                     //Delete integration
                     $gorgiasService = new GorgiasService();
 
-                    $gorgiasService->deleteIntegration($this->getSettings()->gorgiasIntegrationId);
-
-                    
-                    exit();
+                    if ($this->getSettings()->gorgiasIntegrationId) {
+                        $gorgiasService->deleteIntegration($this->getSettings()->gorgiasIntegrationId);
+                        $gorgiasService->deleteWidgets($this->getSettings()->gorgiasIntegrationId);
+                    }
                 }
             }
         );
