@@ -67,9 +67,12 @@ class Gorgias extends Plugin
     public function afterSaveSettings() :void
     {
             parent::afterSaveSettings();
-            Craft::$app->response
+            if (Craft::$app->response->getIsConsoleRequest()) {
+                Craft::$app->response
                 ->redirect(UrlHelper::cpUrl('settings/plugins/gorgias'))
                 ->send();
+            }
+            
     }
     
     private function attachEventHandlers(): void

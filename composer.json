@@ -3,6 +3,7 @@
     "description": "Integration for Craft with Gorgias",
     "type": "craft-plugin",
     "license": "proprietary",
+    "version": "1.0.1",
     "support": {
         "email": "info@punchbuggy.com.au",
         "issues": "https://github.com/punchbuggy/craft-gorgias/issues?state=open",
@@ -20,7 +21,6 @@
             "punchbuggy\\craftgorgias\\": "src/"
         }
     },
-    "version": "1.0.1",
     "extra": {
         "handle": "gorgias",
         "name": "Gorgias",
