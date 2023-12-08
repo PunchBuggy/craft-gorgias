@@ -30,7 +30,7 @@ class GorgiasHTTP extends Model
 {
 
 	public $url = "";
-	public $method = 'POST';
+	public $method = 'GET';
 	public $form = '{{context}}';
 	public $request_content_type = 'application/json';
 	public $response_content_type = 'application/json';

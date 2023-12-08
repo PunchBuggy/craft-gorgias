@@ -72,6 +72,13 @@ class GorgiasData extends Model
     public $orders;
 
     /**
+     * User Carts
+     *
+     * @var array
+     */
+    public $carts;
+
+    /**
      * User Type
      *
      * @var string
@@ -194,6 +201,26 @@ class GorgiasData extends Model
     public function setOrders(array $orders) : GorgiasData
     {
         $this->orders = $orders;
+
+        return $this;
+    }
+
+    /**
+     * @return array
+     */
+    public function getCarts() : array
+    {
+        return $this->carts;
+    }
+
+    /**
+     * @param array $carts
+     *
+     * @return self
+     */
+    public function setCarts(array $carts) : GorgiasData
+    {
+        $this->carts = $carts;
 
         return $this;
     }

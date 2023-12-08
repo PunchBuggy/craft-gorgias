@@ -15,6 +15,8 @@ use yii\base\Event;
 use craft\models\GqlSchema;
 use craft\models\GqlToken;
 use punchbuggy\craftgorgias\services\GorgiasService;
+use yii\base\ActionEvent;
+use yii\web\Controller;
 
 
 /**
@@ -67,7 +69,9 @@ class Gorgias extends Plugin
     public function afterSaveSettings() :void
     {
             parent::afterSaveSettings();
-            if (Craft::$app->response->getIsConsoleRequest()) {
+
+            $isConsoleRequest = Craft::$app->getRequest()->getIsConsoleRequest();
+            if (!$isConsoleRequest) {
                 Craft::$app->response
                 ->redirect(UrlHelper::cpUrl('settings/plugins/gorgias'))
                 ->send();
@@ -134,6 +138,12 @@ class Gorgias extends Plugin
             }
         );
 
+        Event::on(Controller::class, Controller::EVENT_BEFORE_ACTION, function (ActionEvent $actionEvent) {
+
+            if ($actionEvent->action->id === 'users' && $actionEvent->action->controller->id === 'gorgias-endpoints') {
+                Craft::$app->controller->enableCsrfValidation = false;
+            }
+        });
         
     }
 }

@@ -21,8 +21,10 @@ use craft\commerce\elements\Order;
 use punchbuggy\craftgorgias\models\GorgiasData;
 use punchbuggy\craftgorgias\services\GorgiasService;
 use craft\services\Users;
+use craft\services\Addresses;
 use yii\web\Response;
 use craft\services\Gql;
+use craft\helpers\UrlHelper;
 
 
 /**
@@ -91,7 +93,6 @@ class GorgiasEndpointsController extends Controller
 
     }
 
-
     /**
      * 
      * e.g.: actions/gorgias/gorgias-endpoints/users
@@ -100,7 +101,7 @@ class GorgiasEndpointsController extends Controller
      */
     public function actionUsers($customerEmail) : string
     {
-    	
+        
         $this->requirePostRequest();
         $headers = Craft::$app->getRequest()->getHeaders();
         $authToken = null;
@@ -109,23 +110,28 @@ class GorgiasEndpointsController extends Controller
         if ($headers->get('Authorization')) {
             $authToken = $headers->get('Authorization');
         }
+        elseif ($headers->get('X-Authorization')) {
+            $authToken = $headers->get('X-Authorization');
+        }
+
         
+        $rawToken = str_replace("Bearer ", "", $authToken);
         //Authenticate using GraphQL
         $gqlService = Craft::$app->getGql();
         $settings = Gorgias::getInstance()->getSettings();
         $token = $gqlService->getTokenById($settings->tokenId);
 
-        if ($token->accessToken !== $authToken) {
+        if ($token->accessToken !== $rawToken) {
             return json_encode(["error" => "Unauthorised Request"]);
         }
-
+        
         //Get user form email address
         try {
             $client = new Client( [
                 'base_uri' => $siteUrl . '/api/',
                 'headers' => [
                     'Content-Type' => 'application/json',
-                    'Authorization' => $authToken,
+                    'Authorization' => 'Bearer ' . $rawToken,
                 ],
                 'verify' => false //Remove for go live
             ]);
@@ -153,10 +159,11 @@ class GorgiasEndpointsController extends Controller
         }
         catch (ClientException $e) {
 
-        	return json_encode(["error" => "Unauthorised Request"]);
+            return json_encode(["error" => "Unauthorised Request"]);
         }
 
         $userBody = json_decode($response->getBody()->getContents());
+        
 
         //User, Orders and Cart?
 
@@ -179,6 +186,8 @@ class GorgiasEndpointsController extends Controller
             }
 
             if ($userBody->data->user->dateUpdated) {
+
+                //TODO - Format this better
                 $gorgiasData->setDateUpdated($userBody->data->user->dateUpdated);
             }
 
@@ -187,14 +196,10 @@ class GorgiasEndpointsController extends Controller
 
             $user = $usersService->getUserById($userId);
 
+            //TODO - Format this better
             $gorgiasData->setLastLogin($user->lastLoginDate);
 
-            //Make this conditional - show order information
-            $userOrders = Order::find()->email($customerEmail)->all();
-
-            foreach ($userOrders as $orders) {
-                
-            }
+            
         }
         else {
             //There is no user - but maybe they are a guest.
@@ -202,6 +207,135 @@ class GorgiasEndpointsController extends Controller
             $gorgiasData->setUserType('Guest');
 
         }
+
+        $addressService = new Addresses();
+
+        $userOrders = Order::find()->email($customerEmail)->orderBy('dateUpdated DESC')->isCompleted(true)->limit(3)->all();
+
+        $orders = [];
+
+        $userCarts = Order::find()->email($customerEmail)->orderBy('dateUpdated DESC')->isCompleted(false)->limit(3)->all();
+
+        $carts = [];
+
+
+        foreach ($userOrders as $userOrder) {
+
+            $items = [];
+
+            $lineItems = $userOrder->getLineItems();
+
+            foreach ($lineItems as $lineItem) {
+                $items[] = [
+                    'sku' => $lineItem->sku ?? '',
+                    'description' => $lineItem->description ?? '',
+                    'price' => $lineItem->priceAsCurrency ?? '',
+                    'salePrice' => $lineItem->salePriceAsCurrency ?? '',
+                    'total' => $lineItem->totalAsCurrency ?? '',
+                    'discount' => $lineItem->discountAsCurrency ?? '',
+                    'status' => $lineItem->getLineItemStatus->name ?? '',
+                    'note' => $lineItem->note ?? '',
+                    'privateNote' => $lineItem->privateNote ?? '',
+                    'length' => $lineItem->length ?? '',
+                    'height' => $lineItem->height ?? '',
+                    'width' => $lineItem->width ?? '',
+                    'weight' => $lineItem->weight ?? '',
+                ];
+            }
+
+
+            $orders[$userOrder->id] = [
+                'orderNumber' => $userOrder->shortNumber,
+                'paymentStatus' => $userOrder->paidStatus,
+                'orderStatus' => $userOrder->getOrderStatus()->displayName ?? '',
+                'shippingMethod' => $userOrder->shippingMethodName ?? '',
+                'orderTotal' => $userOrder->storedTotalPriceAsCurrency ?? '',
+                'shippingTotal' => $userOrder->storedTotalShippingCostAsCurrency ?? '',
+                'discountTotal' => $userOrder->storedTotalDiscountAsCurrency ?? '',
+                'taxTotal' => $userOrder->storedTotalTaxAsCurrency ?? '',
+                'couponCode' => $userOrder->couponCode ?? '',
+                'adminUrl' => UrlHelper::cpUrl('commerce/orders/' . $userOrder->id),
+                'billingAddressFullName' => $userOrder->billingAddress->fullName ?? '',
+                'billingAddressOrganization' => $userOrder->billingAddress->organization ?? '',
+                'billingAddressLine1' => $userOrder->billingAddress->addressLine1 ?? '',
+                'billingAddressLine2' => $userOrder->billingAddress->addressLine2 ?? '',
+                'billingAddressLocality' => $userOrder->billingAddress->locality ?? '',
+                'billingAddressAdministrativeArea' => $userOrder->billingAddress->administrativeArea ?? '',
+                'billingAddressPostalCode' => $userOrder->billingAddress->postalCode ?? '',
+                'billingAddressCountry' => $userOrder->billingAddress->country ?? '',
+
+                'shippingAddressFullName' => $userOrder->shippingAddress->fullName ?? '',
+                'shippingAddressOrganization' => $userOrder->shippingAddress->organization ?? '',
+                'shippingAddressLine1' => $userOrder->shippingAddress->addressLine1 ?? '',
+                'shippingAddressLine2' => $userOrder->shippingAddress->addressLine2 ?? '',
+                'shippingAddressLocality' => $userOrder->shippingAddress->locality ?? '',
+                'shippingAddressAdministrativeArea' => $userCart->shippingAddress->administrativeArea ?? '',
+                'shippingAddressPostalCode' => $userOrder->shippingAddress->postalCode ?? '',
+                'shippingAddressCountry' => $userOrder->shippingAddress->country ?? '',
+                'orderItems' => $items
+
+            ];
+            
+        }
+
+        foreach ($userCarts as $userCart) {
+
+            $items = [];
+
+            $lineItems = $userCart->getLineItems();
+
+            foreach ($lineItems as $lineItem) {
+                $items[] = [
+                    'sku' => $lineItem->sku ?? '',
+                    'description' => $lineItem->description ?? '',
+                    'price' => $lineItem->priceAsCurrency ?? '',
+                    'salePrice' => $lineItem->salePriceAsCurrency ?? '',
+                    'total' => $lineItem->totalAsCurrency ?? '',
+                    'discount' => $lineItem->discountAsCurrency ?? '',
+                    'status' => $lineItem->getLineItemStatus->name ?? '',
+                    'note' => $lineItem->note ?? '',
+                    'privateNote' => $lineItem->privateNote ?? '',
+                    'length' => $lineItem->length ?? '',
+                    'height' => $lineItem->height ?? '',
+                    'width' => $lineItem->width ?? '',
+                    'weight' => $lineItem->weight ?? '',
+                ];
+            }
+
+            $carts[$userCart->id] = [
+                'adminUrl' => UrlHelper::cpUrl('commerce/orders/' . $userCart->id),
+                'shippingMethod' => $userCart->shippingMethodName ?? '',
+                'orderTotal' => $userCart->storedTotalPriceAsCurrency ?? '',
+                'shippingTotal' => $userCart->storedTotalShippingCostAsCurrency ?? '',
+                'discountTotal' => $userCart->storedTotalDiscountAsCurrency ?? '',
+                'taxTotal' => $userCart->storedTotalTaxAsCurrency ?? '',
+                'couponCode' => $userCart->couponCode ?? '',
+                'billingAddressFullName' => $userCart->billingAddress->fullName ?? '',
+                'billingAddressOrganization' => $userCart->billingAddress->organization ?? '',
+                'billingAddressLine1' => $userCart->billingAddress->addressLine1 ?? '',
+                'billingAddressLine2' => $userCart->billingAddress->addressLine2 ?? '',
+                'billingAddressLocality' => $userCart->billingAddress->locality ?? '',
+                'billingAddressAdministrativeArea' => $userCart->billingAddress->administrativeArea ?? '',
+                'billingAddressPostalCode' => $userCart->billingAddress->postalCode ?? '',
+                'billingAddressCountry' => $userCart->billingAddress->country ?? '',
+
+                'shippingAddressFullName' => $userCart->shippingAddress->fullName ?? '',
+                'shippingAddressOrganization' => $userCart->shippingAddress->organization ?? '',
+                'shippingAddressLine1' => $userCart->shippingAddress->addressLine1 ?? '',
+                'shippingAddressLine2' => $userCart->shippingAddress->addressLine2 ?? '',
+                'shippingAddressLocality' => $userCart->shippingAddress->locality ?? '',
+                'shippingAddressAdministrativeArea' => $userCart->shippingAddress->administrativeArea ?? '',
+                'shippingAddressPostalCode' => $userCart->shippingAddress->postalCode ?? '',
+                'shippingAddressCountry' => $userCart->shippingAddress->country ?? '',
+
+                'orderItems' => $items
+
+            ];
+            
+        }
+
+        $gorgiasData->setOrders($orders);
+        $gorgiasData->setCarts($carts);
 
         //order id - items - shipping quotes
 
