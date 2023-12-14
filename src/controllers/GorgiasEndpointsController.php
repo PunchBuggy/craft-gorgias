@@ -250,7 +250,7 @@ class GorgiasEndpointsController extends Controller
                     'salePrice' => $lineItem->salePriceAsCurrency ?? '',
                     'total' => $lineItem->totalAsCurrency ?? '',
                     'discount' => $lineItem->discountAsCurrency ?? '',
-                    'status' => $lineItem->getLineItemStatus->name ?? '',
+                    'status' => $lineItem->getLineItemStatus()->name ?? '',
                     'note' => $lineItem->note ?? '',
                     'privateNote' => $lineItem->privateNote ?? '',
                     'length' => $lineItem->length ?? '',
@@ -258,6 +258,13 @@ class GorgiasEndpointsController extends Controller
                     'width' => $lineItem->width ?? '',
                     'weight' => $lineItem->weight ?? '',
                 ];
+            }
+            
+            //show check if tax is included
+            $tax = $userOrder->storedTotalTaxAsCurrency;
+
+            if ($tax === "$0.00") {
+                $tax = $userOrder->storedTotalTaxIncludedAsCurrency;
             }
 
 
@@ -271,9 +278,9 @@ class GorgiasEndpointsController extends Controller
                 'orderTotal' => $userOrder->storedTotalPriceAsCurrency ?? '',
                 'shippingTotal' => $userOrder->storedTotalShippingCostAsCurrency ?? '',
                 'discountTotal' => $userOrder->storedTotalDiscountAsCurrency ?? '',
-                'taxTotal' => $userOrder->storedTotalTaxAsCurrency ?? '',
+                'taxTotal' => $tax ?? '',
                 'couponCode' => $userOrder->couponCode ?? '',
-                'gateway' => $userOrder->getGateway()->displayName ?? '',
+                'gateway' => $userOrder->getGateway()->displayName() ?? '',
                 'adminUrl' => UrlHelper::cpUrl('commerce/orders/' . $userOrder->id),
                 'billingAddressFullName' => $userOrder->billingAddress->fullName ?? '',
                 'billingAddressOrganization' => $userOrder->billingAddress->organization ?? '',
@@ -282,7 +289,7 @@ class GorgiasEndpointsController extends Controller
                 'billingAddressLocality' => $userOrder->billingAddress->locality ?? '',
                 'billingAddressAdministrativeArea' => $userOrder->billingAddress->administrativeArea ?? '',
                 'billingAddressPostalCode' => $userOrder->billingAddress->postalCode ?? '',
-                'billingAddressCountry' => $userOrder->billingAddress->country ?? '',
+                'billingAddressCountry' => $userOrder->billingAddress->countryCode ?? '',
 
                 'shippingAddressFullName' => $userOrder->shippingAddress->fullName ?? '',
                 'shippingAddressOrganization' => $userOrder->shippingAddress->organization ?? '',
@@ -291,7 +298,7 @@ class GorgiasEndpointsController extends Controller
                 'shippingAddressLocality' => $userOrder->shippingAddress->locality ?? '',
                 'shippingAddressAdministrativeArea' => $userCart->shippingAddress->administrativeArea ?? '',
                 'shippingAddressPostalCode' => $userOrder->shippingAddress->postalCode ?? '',
-                'shippingAddressCountry' => $userOrder->shippingAddress->country ?? '',
+                'shippingAddressCountry' => $userOrder->shippingAddress->countryCode ?? '',
                 'orderItems' => $items
 
             ];
@@ -313,7 +320,7 @@ class GorgiasEndpointsController extends Controller
                     'salePrice' => $lineItem->salePriceAsCurrency ?? '',
                     'total' => $lineItem->totalAsCurrency ?? '',
                     'discount' => $lineItem->discountAsCurrency ?? '',
-                    'status' => $lineItem->getLineItemStatus->name ?? '',
+                    'status' => $lineItem->getLineItemStatus()->name ?? '',
                     'note' => $lineItem->note ?? '',
                     'privateNote' => $lineItem->privateNote ?? '',
                     'length' => $lineItem->length ?? '',
@@ -321,6 +328,13 @@ class GorgiasEndpointsController extends Controller
                     'width' => $lineItem->width ?? '',
                     'weight' => $lineItem->weight ?? '',
                 ];
+            }
+            
+            //show check if tax is included
+            $tax = $userCart->storedTotalTaxAsCurrency;
+
+            if ($tax === "$0.00") {
+                $tax = $userCart->storedTotalTaxIncludedAsCurrency;
             }
 
             $carts[] = [
@@ -330,7 +344,7 @@ class GorgiasEndpointsController extends Controller
                 'orderTotal' => $userCart->storedTotalPriceAsCurrency ?? '',
                 'shippingTotal' => $userCart->storedTotalShippingCostAsCurrency ?? '',
                 'discountTotal' => $userCart->storedTotalDiscountAsCurrency ?? '',
-                'taxTotal' => $userCart->storedTotalTaxAsCurrency ?? '',
+                'taxTotal' => $tax ?? '',
                 'couponCode' => $userCart->couponCode ?? '',
                 'billingAddressFullName' => $userCart->billingAddress->fullName ?? '',
                 'billingAddressOrganization' => $userCart->billingAddress->organization ?? '',
@@ -339,7 +353,7 @@ class GorgiasEndpointsController extends Controller
                 'billingAddressLocality' => $userCart->billingAddress->locality ?? '',
                 'billingAddressAdministrativeArea' => $userCart->billingAddress->administrativeArea ?? '',
                 'billingAddressPostalCode' => $userCart->billingAddress->postalCode ?? '',
-                'billingAddressCountry' => $userCart->billingAddress->country ?? '',
+                'billingAddressCountry' => $userCart->billingAddress->countryCode ?? '',
 
                 'shippingAddressFullName' => $userCart->shippingAddress->fullName ?? '',
                 'shippingAddressOrganization' => $userCart->shippingAddress->organization ?? '',
@@ -348,7 +362,7 @@ class GorgiasEndpointsController extends Controller
                 'shippingAddressLocality' => $userCart->shippingAddress->locality ?? '',
                 'shippingAddressAdministrativeArea' => $userCart->shippingAddress->administrativeArea ?? '',
                 'shippingAddressPostalCode' => $userCart->shippingAddress->postalCode ?? '',
-                'shippingAddressCountry' => $userCart->shippingAddress->country ?? '',
+                'shippingAddressCountry' => $userCart->shippingAddress->countryCode ?? '',
 
                 'orderItems' => $items
 

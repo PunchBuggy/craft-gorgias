@@ -134,7 +134,7 @@ class GorgiasTicketTemplate extends Model
 						],
 						[
 							'path' => 'gateway',
-							'type' => 'date',
+							'type' => 'text',
 							'order' => 1,
 							'title' => 'Payment Gateway'
 						],
