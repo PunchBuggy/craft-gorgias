@@ -53,6 +53,22 @@ class GorgiasEndpointsController extends Controller
     // Public Methods
     // =========================================================================
 
+
+     /**
+     * Handle a request going to our plugin's actionDoSomething URL,
+     * e.g.: actions/gorgias/gorgias-endpoints/create-widget
+     *
+     * @return mixed
+     */
+    public function actionCreateWidget() : string
+    {
+        $gorgiasService = new GorgiasService();
+
+        $widgetData = $gorgiasService->showWidgets();
+
+        return $widgetData;
+    }
+
     /**
      * Handle a request going to our plugin's actionDoSomething URL,
      * e.g.: actions/gorgias/gorgias-endpoints/create-integration
@@ -229,6 +245,7 @@ class GorgiasEndpointsController extends Controller
                 $items[] = [
                     'sku' => $lineItem->sku ?? '',
                     'description' => $lineItem->description ?? '',
+                    'qty' => $lineItem->qty ?? '',
                     'price' => $lineItem->priceAsCurrency ?? '',
                     'salePrice' => $lineItem->salePriceAsCurrency ?? '',
                     'total' => $lineItem->totalAsCurrency ?? '',
@@ -244,7 +261,9 @@ class GorgiasEndpointsController extends Controller
             }
 
 
-            $orders[$userOrder->id] = [
+            $orders[] = [
+                'id' => $userOrder->id,
+                'dateCreated' => $userOrder->dateCreated->format('Y-m-d H:i:s'),
                 'orderNumber' => $userOrder->shortNumber,
                 'paymentStatus' => $userOrder->paidStatus,
                 'orderStatus' => $userOrder->getOrderStatus()->displayName ?? '',
@@ -254,6 +273,7 @@ class GorgiasEndpointsController extends Controller
                 'discountTotal' => $userOrder->storedTotalDiscountAsCurrency ?? '',
                 'taxTotal' => $userOrder->storedTotalTaxAsCurrency ?? '',
                 'couponCode' => $userOrder->couponCode ?? '',
+                'gateway' => $userOrder->getGateway()->displayName ?? '',
                 'adminUrl' => UrlHelper::cpUrl('commerce/orders/' . $userOrder->id),
                 'billingAddressFullName' => $userOrder->billingAddress->fullName ?? '',
                 'billingAddressOrganization' => $userOrder->billingAddress->organization ?? '',
@@ -288,6 +308,7 @@ class GorgiasEndpointsController extends Controller
                 $items[] = [
                     'sku' => $lineItem->sku ?? '',
                     'description' => $lineItem->description ?? '',
+                    'qty' => $lineItem->qty ?? '',
                     'price' => $lineItem->priceAsCurrency ?? '',
                     'salePrice' => $lineItem->salePriceAsCurrency ?? '',
                     'total' => $lineItem->totalAsCurrency ?? '',
@@ -302,7 +323,8 @@ class GorgiasEndpointsController extends Controller
                 ];
             }
 
-            $carts[$userCart->id] = [
+            $carts[] = [
+                'id' => $userCart->id,
                 'adminUrl' => UrlHelper::cpUrl('commerce/orders/' . $userCart->id),
                 'shippingMethod' => $userCart->shippingMethodName ?? '',
                 'orderTotal' => $userCart->storedTotalPriceAsCurrency ?? '',
