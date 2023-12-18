@@ -59,7 +59,7 @@ class GorgiasTicketTemplate extends Model
 			'path' => 'dateUpdated',
 			'type' => 'date',
 			'order' => 0,
-			'title' => 'Date updated'
+			'title' => Craft::t('gorgias',"Date updated")
 		];
 
 
@@ -67,28 +67,28 @@ class GorgiasTicketTemplate extends Model
 			'path' => 'firstName',
 			'type' => 'text',
 			'order' => 1,
-			'title' => 'First Name'
+			'title' => Craft::t('gorgias',"First Name")
 		];
 
 		$this->widgets[0]['widgets'][] = [
 			'path' => 'lastName',
 			'type' => 'text',
 			'order' => 1,
-			'title' => 'Last Name'
+			'title' => Craft::t('gorgias',"Last Name")
 		];
 
 		$this->widgets[0]['widgets'][] = [
 			'path' => 'userType',
 			'type' => 'text',
 			'order' => 2,
-			'title' => 'User Type'
+			'title' => Craft::t('gorgias',"User Type")
 		];
 
 		$this->widgets[0]['widgets'][] = [
 			'path' => 'lastLogin',
 			'type' => 'date',
 			'order' => 3,
-			'title' => 'Last Login'
+			'title' => Craft::t('gorgias',"Last Login")
 		];
 
 		$orderUrl = UrlHelper::cpUrl('commerce/orders/{{id}}');
@@ -118,169 +118,169 @@ class GorgiasTicketTemplate extends Model
 							'path' => 'paymentStatus',
 							'type' => 'text',
 							'order' => 0,
-							'title' => 'Payment Status'
+							'title' => Craft::t('gorgias',"Payment Status")
 						],
 						[
 							'path' => 'orderStatus',
 							'type' => 'text',
 							'order' => 0,
-							'title' => 'Order Status'
+							'title' => Craft::t('gorgias',"Order Status")
 						],
 						[
 							'path' => 'dateCreated',
 							'type' => 'date',
 							'order' => 0,
-							'title' => 'Date Created'
+							'title' => Craft::t('gorgias',"Date Created")
 						],
 						[
 							'path' => 'gateway',
 							'type' => 'text',
 							'order' => 1,
-							'title' => 'Payment Gateway'
+							'title' => Craft::t('gorgias',"Payment Gateway")
 						],
 						[
 							'path' => 'shippingMethod',
 							'type' => 'text',
 							'order' => 2,
-							'title' => 'Shipping Method'
+							'title' => Craft::t('gorgias',"Shipping Method")
 						],
 						[
 							'path' => 'orderTotal',
 							'type' => 'text',
 							'order' => 3,
-							'title' => 'Order Total'
+							'title' => Craft::t('gorgias',"Order Total")
 						],
 						[
 							'path' => 'shippingTotal',
 							'type' => 'text',
 							'order' => 4,
-							'title' => 'Shipping Total'
+							'title' => Craft::t('gorgias',"Shipping Total")
 						],
 						[
 							'path' => 'discountTotal',
 							'type' => 'text',
 							'order' => 5,
-							'title' => 'Discount Total'
+							'title' => Craft::t('gorgias',"Discount Total")
 						],
 						[
 							'path' => 'taxTotal',
 							'type' => 'text',
 							'order' => 6,
-							'title' => 'Tax Total'
+							'title' => Craft::t('gorgias',"Tax Total")
 						],
 						[
 							'path' => 'couponCode',
 							'type' => 'text',
 							'order' => 7,
-							'title' => 'Coupon Code'
+							'title' => Craft::t('gorgias',"Coupon Code")
 						],
 						[
 							'type' => 'card',
 							'order' => 8,
-							'title' => 'Billing Address',
+							'title' => Craft::t('gorgias',"Billing Address"),
 							'widgets' => [
 								[
 									'path' => 'billingAddressFullName',
 									'type' => 'text',
 									'order' => 0,
-									'title' => 'Full Name'
+									'title' => Craft::t('gorgias',"Billing Address Full Name")
 								],
 								[
 									'path' => 'billingAddressOrganization',
 									'type' => 'text',
 									'order' => 1,
-									'title' => 'Company'
+									'title' => Craft::t('gorgias',"Billing Address Organization")
 								],
 								[
 									'path' => 'billingAddressLine1',
 									'type' => 'text',
 									'order' => 2,
-									'title' => 'Address Line 1'
+									'title' => Craft::t('gorgias',"Billing Address Line 1")
 								],
 								[
 									'path' => 'billingAddressLine2',
 									'type' => 'text',
 									'order' => 3,
-									'title' => 'Address Line 2'
+									'title' => Craft::t('gorgias',"Billing Address Line 2")
 								],
 								[
 									'path' => 'billingAddressLocality',
 									'type' => 'text',
 									'order' => 4,
-									'title' => 'Suburb'
+									'title' => Craft::t('gorgias',"Billing Address Locality")
 								],
 								[
 									'path' => 'billingAddressAdministrativeArea',
 									'type' => 'text',
 									'order' => 5,
-									'title' => 'State'
+									'title' => Craft::t('gorgias',"Billing Address Administrative Area")
 								],
 								[
 									'path' => 'billingAddressPostalCode',
 									'type' => 'text',
 									'order' => 6,
-									'title' => 'Post Code'
+									'title' => Craft::t('gorgias',"Billing Address Postal Code")
 								],
 								[
 									'path' => 'billingAddressCountry',
 									'type' => 'text',
 									'order' => 7,
-									'title' => 'Country'
+									'title' => Craft::t('gorgias',"Billing Address Country")
 								]
 							]
 						],
 						[
 							'type' => 'card',
 							'order' => 9,
-							'title' => 'Shipping Address',
+							'title' => Craft::t('gorgias',"Shipping Address"),
 							'widgets' => [
 								[
 									'path' => 'shippingAddressFullName',
 									'type' => 'text',
 									'order' => 0,
-									'title' => 'Full Name'
+									'title' => Craft::t('gorgias',"Shipping Address Full Name")
 								],
 								[
 									'path' => 'shippingAddressOrganization',
 									'type' => 'text',
 									'order' => 1,
-									'title' => 'Company'
+									'title' => Craft::t('gorgias',"Shipping Address Organization")
 								],
 								[
 									'path' => 'shippingAddressLine1',
 									'type' => 'text',
 									'order' => 2,
-									'title' => 'Address Line 1'
+									'title' => Craft::t('gorgias',"Shipping Address Line 1")
 								],
 								[
 									'path' => 'shippingAddressLine2',
 									'type' => 'text',
 									'order' => 3,
-									'title' => 'Address Line 2'
+									'title' => Craft::t('gorgias',"Shipping Address Line 2")
 								],
 								[
 									'path' => 'shippingAddressLocality',
 									'type' => 'text',
 									'order' => 4,
-									'title' => 'Suburb'
+									'title' => Craft::t('gorgias',"Shipping Address Locality")
 								],
 								[
 									'path' => 'shippingAddressAdministrativeArea',
 									'type' => 'text',
 									'order' => 5,
-									'title' => 'State'
+									'title' => Craft::t('gorgias',"Shipping Address Administrative Area")
 								],
 								[
 									'path' => 'shippingAddressPostalCode',
 									'type' => 'text',
 									'order' => 6,
-									'title' => 'Post Code'
+									'title' => Craft::t('gorgias',"Shipping Address Postal Code")
 								],
 								[
 									'path' => 'shippingAddressCountry',
 									'type' => 'text',
 									'order' => 7,
-									'title' => 'Country'
+									'title' => Craft::t('gorgias',"Shipping Address Country")
 								]
 							]
 						],
@@ -291,91 +291,91 @@ class GorgiasTicketTemplate extends Model
 								[
 									'type' => 'card',
 									'order' => 10,
-									'title' => 'Order Items',
+									'title' => Craft::t('gorgias',"Order Items"),
 									'widgets' => [
 										[
 											'path' => 'status',
 											'type' => 'text',
 											'order' => 0,
-											'title' => 'Status'
+											'title' => Craft::t('gorgias',"Line Item Status")
 										],
 										[
 											'path' => 'description',
 											'type' => 'text',
 											'order' => 1,
-											'title' => 'Description'
+											'title' => Craft::t('gorgias',"Line Item Description")
 										],
 										[
 											'path' => 'sku',
 											'type' => 'text',
 											'order' => 2,
-											'title' => 'SKU'
+											'title' => Craft::t('gorgias',"Line Item SKU")
 										],
 										[
 											'path' => 'qty',
 											'type' => 'text',
 											'order' => 3,
-											'title' => 'Quantity'
+											'title' => Craft::t('gorgias',"Line Item Quantity")
 										],
 										[
 											'path' => 'price',
 											'type' => 'text',
 											'order' => 4,
-											'title' => 'Price'
+											'title' => Craft::t('gorgias',"Line Item Price")
 										],
 										[
 											'path' => 'salePrice',
 											'type' => 'text',
 											'order' => 5,
-											'title' => 'Sale Price'
+											'title' => Craft::t('gorgias',"Line Item Sale Price")
 										],
 										[
 											'path' => 'discount',
 											'type' => 'text',
 											'order' => 6,
-											'title' => 'Discount'
+											'title' => Craft::t('gorgias',"Line Item Discount")
 										],
 										[
 											'path' => 'total',
 											'type' => 'text',
 											'order' => 7,
-											'title' => 'Total'
+											'title' => Craft::t('gorgias',"Line Item Total")
 										],
 										[
 											'path' => 'note',
 											'type' => 'text',
 											'order' => 8,
-											'title' => 'Customer Note'
+											'title' => Craft::t('gorgias',"Line Item Customer Note")
 										],
 										[
 											'path' => 'privateNote',
 											'type' => 'text',
 											'order' => 9,
-											'title' => 'Private Note'
+											'title' => Craft::t('gorgias',"Line Item Private Note")
 										],
 										[
 											'path' => 'length',
 											'type' => 'text',
 											'order' => 10,
-											'title' => 'Length'
+											'title' => Craft::t('gorgias',"Line Item Length")
 										],
 										[
 											'path' => 'height',
 											'type' => 'text',
 											'order' => 11,
-											'title' => 'Height'
+											'title' => Craft::t('gorgias',"Line Item Height")
 										],
 										[
 											'path' => 'width',
 											'type' => 'text',
 											'order' => 12,
-											'title' => 'Width'
+											'title' => Craft::t('gorgias',"Line Item Width")
 										],
 										[
 											'path' => 'weight',
 											'type' => 'text',
 											'order' => 13,
-											'title' => 'Weight'
+											'title' => Craft::t('gorgias',"Line Item Weight")
 										]
 									]
 								]
@@ -394,7 +394,7 @@ class GorgiasTicketTemplate extends Model
 			'path' => '',
 			'type' => 'card',
 			'order' => 1,
-			'title' => 'Carts'
+			'title' => Craft::t('gorgias',"Carts")
 		];
 
 		$this->widgets[2]['widgets'][] = [
@@ -403,7 +403,7 @@ class GorgiasTicketTemplate extends Model
 			'widgets' => [
 				[
 					'type' => 'card',
-					'title' => 'Cart {{orderNumber}}',
+					'title' => Craft::t('gorgias',"Cart") .' {{orderNumber}}',
 					'meta' => [
 						'link' => $orderUrl,
 						'color' => '',
@@ -415,151 +415,151 @@ class GorgiasTicketTemplate extends Model
 							'path' => 'dateCreated',
 							'type' => 'text',
 							'order' => 0,
-							'title' => 'Date Created'
+							'title' => Craft::t('gorgias',"Date Created")
 						],
 						[
 							'path' => 'shippingMethod',
 							'type' => 'text',
 							'order' => 1,
-							'title' => 'Shipping Method'
+							'title' => Craft::t('gorgias',"Shipping Method")
 						],
 						[
 							'path' => 'orderTotal',
 							'type' => 'text',
 							'order' => 2,
-							'title' => 'Order Total'
+							'title' => Craft::t('gorgias',"Order Total")
 						],
 						[
 							'path' => 'shippingTotal',
 							'type' => 'text',
 							'order' => 3,
-							'title' => 'Shipping Total'
+							'title' => Craft::t('gorgias',"Shipping Total")
 						],
 						[
 							'path' => 'discountTotal',
 							'type' => 'text',
 							'order' => 4,
-							'title' => 'Discount Total'
+							'title' => Craft::t('gorgias',"Discount Total")
 						],
 						[
 							'path' => 'taxTotal',
 							'type' => 'text',
 							'order' => 5,
-							'title' => 'Tax Total'
+							'title' =>  Craft::t('gorgias',"Tax Total")
 						],
 						[
 							'path' => 'couponCode',
 							'type' => 'text',
 							'order' => 6,
-							'title' => 'Coupon Code'
+							'title' => Craft::t('gorgias',"Coupon Code")
 						],
 						[
 							'type' => 'card',
 							'order' => 7,
-							'title' => 'Billing Address',
+							'title' => Craft::t('gorgias',"Billing Address"),
 							'widgets' => [
 								[
 									'path' => 'billingAddressFullName',
 									'type' => 'text',
 									'order' => 0,
-									'title' => 'Full Name'
+									'title' => Craft::t('gorgias',"Billing Address Full Name")
 								],
 								[
 									'path' => 'billingAddressOrganization',
 									'type' => 'text',
 									'order' => 1,
-									'title' => 'Company'
+									'title' => Craft::t('gorgias',"Billing Address Organization")
 								],
 								[
 									'path' => 'billingAddressLine1',
 									'type' => 'text',
 									'order' => 2,
-									'title' => 'Address Line 1'
+									'title' => Craft::t('gorgias',"Billing Address Line 1")
 								],
 								[
 									'path' => 'billingAddressLine2',
 									'type' => 'text',
 									'order' => 3,
-									'title' => 'Address Line 2'
+									'title' => Craft::t('gorgias',"Billing Address Line 2")
 								],
 								[
 									'path' => 'billingAddressLocality',
 									'type' => 'text',
 									'order' => 4,
-									'title' => 'Suburb'
+									'title' => Craft::t('gorgias',"Billing Address Locality")
 								],
 								[
 									'path' => 'billingAddressAdministrativeArea',
 									'type' => 'text',
 									'order' => 5,
-									'title' => 'State'
+									'title' => Craft::t('gorgias',"Billing Address Administrative Area")
 								],
 								[
 									'path' => 'billingAddressPostalCode',
 									'type' => 'text',
 									'order' => 6,
-									'title' => 'Post Code'
+									'title' => Craft::t('gorgias',"Billing Address Postal Code")
 								],
 								[
 									'path' => 'billingAddressCountry',
 									'type' => 'text',
 									'order' => 7,
-									'title' => 'Country'
+									'title' => Craft::t('gorgias',"Billing Address Country")
 								]
 							]
 						],
 						[
 							'type' => 'card',
 							'order' => 8,
-							'title' => 'Shipping Address',
+							'title' => Craft::t('gorgias',"Shipping Address"),
 							'widgets' => [
 								[
 									'path' => 'shippingAddressFullName',
 									'type' => 'text',
 									'order' => 0,
-									'title' => 'Full Name'
+									'title' => Craft::t('gorgias',"Shipping Address Full Name")
 								],
 								[
 									'path' => 'shippingAddressOrganization',
 									'type' => 'text',
 									'order' => 1,
-									'title' => 'Company'
+									'title' => Craft::t('gorgias',"Shipping Address Organization")
 								],
 								[
 									'path' => 'shippingAddressLine1',
 									'type' => 'text',
 									'order' => 2,
-									'title' => 'Address Line 1'
+									'title' => Craft::t('gorgias',"Shipping Address Line 1")
 								],
 								[
 									'path' => 'shippingAddressLine2',
 									'type' => 'text',
 									'order' => 3,
-									'title' => 'Address Line 2'
+									'title' => Craft::t('gorgias',"Shipping Address Line 2")
 								],
 								[
 									'path' => 'shippingAddressLocality',
 									'type' => 'text',
 									'order' => 4,
-									'title' => 'Suburb'
+									'title' => Craft::t('gorgias',"Shipping Address Locality")
 								],
 								[
 									'path' => 'shippingAddressAdministrativeArea',
 									'type' => 'text',
 									'order' => 5,
-									'title' => 'State'
+									'title' => Craft::t('gorgias',"Shipping Address Administrative Area")
 								],
 								[
 									'path' => 'shippingAddressPostalCode',
 									'type' => 'text',
 									'order' => 6,
-									'title' => 'Post Code'
+									'title' => Craft::t('gorgias',"Shipping Address Postal Code")
 								],
 								[
 									'path' => 'shippingAddressCountry',
 									'type' => 'text',
 									'order' => 7,
-									'title' => 'Country'
+									'title' => Craft::t('gorgias',"Shipping Address Country")
 								]
 							]
 						],
@@ -570,85 +570,85 @@ class GorgiasTicketTemplate extends Model
 								[
 									'type' => 'card',
 									'order' => 7,
-									'title' => 'Order Items',
+									'title' => Craft::t('gorgias',"Order Items"),
 									'widgets' => [
 										[
 											'path' => 'description',
 											'type' => 'text',
 											'order' => 0,
-											'title' => 'Description'
+											'title' => Craft::t('gorgias',"Line Item Description")
 										],
 										[
 											'path' => 'sku',
 											'type' => 'text',
 											'order' => 1,
-											'title' => 'SKU'
+											'title' => Craft::t('gorgias',"Line Item SKU")
 										],
 										[
 											'path' => 'qty',
 											'type' => 'text',
 											'order' => 2,
-											'title' => 'Quantity'
+											'title' => Craft::t('gorgias',"Line Item Quantity")
 										],
 										[
 											'path' => 'price',
 											'type' => 'text',
 											'order' => 3,
-											'title' => 'Price'
+											'title' => Craft::t('gorgias',"Line Item Price")
 										],
 										[
 											'path' => 'salePrice',
 											'type' => 'text',
 											'order' => 4,
-											'title' => 'Sale Price'
+											'title' => Craft::t('gorgias',"Line Item Sale Price")
 										],
 										[
 											'path' => 'discount',
 											'type' => 'text',
 											'order' => 5,
-											'title' => 'Discount'
+											'title' => Craft::t('gorgias',"Line Item Discount")
 										],
 										[
 											'path' => 'total',
 											'type' => 'text',
 											'order' => 6,
-											'title' => 'Total'
+											'title' => Craft::t('gorgias',"Line Item Total")
 										],
 										[
 											'path' => 'note',
 											'type' => 'text',
 											'order' => 7,
-											'title' => 'Customer Note'
+											'title' => Craft::t('gorgias',"Line Item Customer Note")
 										],
 										[
 											'path' => 'privateNote',
 											'type' => 'text',
 											'order' => 8,
-											'title' => 'Private Note'
+											'title' => Craft::t('gorgias',"Line Item Private Note")
 										],
 										[
 											'path' => 'length',
 											'type' => 'text',
 											'order' => 9,
-											'title' => 'Length'
+											'title' => Craft::t('gorgias',"Line Item Length")
 										],
 										[
 											'path' => 'height',
 											'type' => 'text',
 											'order' => 10,
-											'title' => 'Height'
+											'title' => Craft::t('gorgias',"Line Item Height")
 										],
 										[
 											'path' => 'width',
 											'type' => 'text',
 											'order' => 11,
-											'title' => 'Width'
+											'title' => Craft::t('gorgias',"Line Item Width")
 										],
 										[
 											'path' => 'weight',
 											'type' => 'text',
 											'order' => 12,
-											'title' => 'Weight'
+											'title' => Craft::t('gorgias',"Line Item Weight")
 										]
 									]
 								]

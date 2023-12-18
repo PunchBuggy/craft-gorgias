@@ -54,21 +54,6 @@ class GorgiasEndpointsController extends Controller
     // =========================================================================
 
 
-     /**
-     * Handle a request going to our plugin's actionDoSomething URL,
-     * e.g.: actions/gorgias/gorgias-endpoints/create-widget
-     *
-     * @return mixed
-     */
-    public function actionCreateWidget() : string
-    {
-        $gorgiasService = new GorgiasService();
-
-        $widgetData = $gorgiasService->showWidgets();
-
-        return $widgetData;
-    }
-
     /**
      * Handle a request going to our plugin's actionDoSomething URL,
      * e.g.: actions/gorgias/gorgias-endpoints/create-integration
@@ -78,9 +63,6 @@ class GorgiasEndpointsController extends Controller
     public function actionCreateIntegration() : Response
     {
 
-        // $gorgiasService = new GorgiasService();
-
-        // $gorgiasService->listWidgets();
 
         $request = Craft::$app->getRequest();
         //Do the Integrations API call here.
@@ -210,7 +192,7 @@ class GorgiasEndpointsController extends Controller
             $usersService = new Users();
 
             $user = $usersService->getUserById($userId);
-            
+
             $gorgiasData->setLastLogin($user->lastLoginDate);
 
             
@@ -370,8 +352,6 @@ class GorgiasEndpointsController extends Controller
 
         $gorgiasData->setOrders($orders);
         $gorgiasData->setCarts($carts);
-
-        //order id - items - shipping quotes
 
         return json_encode($gorgiasData);
     }
