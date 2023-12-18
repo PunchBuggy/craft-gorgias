@@ -30,7 +30,7 @@ use yii\web\Controller;
  */
 class Gorgias extends Plugin
 {
-    public string $schemaVersion = '1.0.2';
+    public string $schemaVersion = '1.0.3';
     public bool $hasCpSettings = true;
 
 
