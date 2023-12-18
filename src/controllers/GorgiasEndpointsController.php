@@ -203,7 +203,6 @@ class GorgiasEndpointsController extends Controller
 
             if ($userBody->data->user->dateUpdated) {
 
-                //TODO - Format this better
                 $gorgiasData->setDateUpdated($userBody->data->user->dateUpdated);
             }
 
@@ -211,8 +210,7 @@ class GorgiasEndpointsController extends Controller
             $usersService = new Users();
 
             $user = $usersService->getUserById($userId);
-
-            //TODO - Format this better
+            
             $gorgiasData->setLastLogin($user->lastLoginDate);
 
             
@@ -259,8 +257,8 @@ class GorgiasEndpointsController extends Controller
                     'weight' => $lineItem->weight ?? '',
                 ];
             }
-            
-            //show check if tax is included
+			
+			//show check if tax is included
             $tax = $userOrder->storedTotalTaxAsCurrency;
 
             if ($tax === "$0.00") {
@@ -329,8 +327,8 @@ class GorgiasEndpointsController extends Controller
                     'weight' => $lineItem->weight ?? '',
                 ];
             }
-            
-            //show check if tax is included
+			
+			//show check if tax is included
             $tax = $userCart->storedTotalTaxAsCurrency;
 
             if ($tax === "$0.00") {

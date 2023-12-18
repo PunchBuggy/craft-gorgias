@@ -97,7 +97,7 @@ class GorgiasTicketTemplate extends Model
 			'path' => '',
 			'type' => 'card',
 			'order' => 1,
-			'title' => 'Orders'
+			'title' => Craft::t('gorgias',"Orders")
 		];
 
 		$this->widgets[1]['widgets'][] = [
@@ -106,7 +106,7 @@ class GorgiasTicketTemplate extends Model
 			'widgets' => [
 				[
 					'type' => 'card',
-					'title' => 'Order {{orderNumber}}',
+					'title' => Craft::t('gorgias',"Order") .' {{orderNumber}}',
 					'meta' => [
 						'link' => $orderUrl,
 						'color' => '',

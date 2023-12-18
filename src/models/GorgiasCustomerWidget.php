@@ -12,7 +12,7 @@ namespace punchbuggy\craftgorgias\models;
 
 use punchbuggy\craftgorgias\Gorgias;
 use craft\helpers\UrlHelper;
-use punchbuggy\craftgorgias\models\GorgiasCustomerTemplate;
+use punchbuggy\craftgorgias\models\GorgiasTicketTemplate;
 
 use Craft;
 use craft\base\Model;
@@ -40,7 +40,7 @@ class GorgiasCustomerWidget extends Model
 	public function __construct() {
 		$this->integration_id = Gorgias::getInstance()->getSettings()->gorgiasIntegrationId;
 
-		$this->template = new GorgiasCustomerTemplate(); 
+		$this->template = new GorgiasTicketTemplate(); 
 	}
 
 
